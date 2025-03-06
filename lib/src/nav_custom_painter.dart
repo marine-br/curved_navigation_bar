@@ -11,7 +11,7 @@ class NavCustomPainter extends CustomPainter {
     final span = 1.0 / itemsLength;
     s = 0.2;
     double l = startingLoc + (span - s) / 2;
-    loc = textDirection == TextDirection.rtl ? 0.8 - l : l;
+    loc = l;
   }
 
   @override
@@ -24,20 +24,20 @@ class NavCustomPainter extends CustomPainter {
       ..moveTo(0, 0)
       ..lineTo((loc - 0.1) * size.width, 0)
       ..cubicTo(
-        (loc + s * 0.20) * size.width,
-        size.height * 0.05,
-        loc * size.width,
-        size.height * 0.60,
-        (loc + s * 0.50) * size.width,
-        size.height * 0.60,
+        (loc + s * 0.45) * size.width, // x
+        size.height * 0.05, // y
+        loc * size.width, // x
+        size.height * 0.55, // y
+        (loc + s * 0.50) * size.width, // x
+        size.height * 0.60, // y
       )
       ..cubicTo(
-        (loc + s) * size.width,
-        size.height * 0.60,
-        (loc + s - s * 0.20) * size.width,
-        size.height * 0.05,
-        (loc + s + 0.1) * size.width,
-        0,
+        (loc + s) * size.width, // x
+        size.height * 0.55, // y
+        (loc + s - s * .46) * size.width, // x
+        size.height * 0.1, // y
+        (loc + s + 0.1) * size.width, // x
+        0, // y
       )
       ..lineTo(size.width, 0)
       ..lineTo(size.width, size.height)

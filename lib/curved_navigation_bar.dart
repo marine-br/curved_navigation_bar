@@ -19,6 +19,7 @@ class CurvedNavigationBar extends StatefulWidget {
   final Duration animationDuration;
   final double height;
   final double? maxWidth;
+  final double bottomSpacing;
 
   CurvedNavigationBar({
     Key? key,
@@ -33,6 +34,7 @@ class CurvedNavigationBar extends StatefulWidget {
     this.animationDuration = const Duration(milliseconds: 600),
     this.height = 75.0,
     this.maxWidth,
+    this.bottomSpacing = 20,
   })  : letIndexChange = letIndexChange ?? ((_) => true),
         assert(items.isNotEmpty),
         assert(0 <= index && index < items.length),
@@ -100,20 +102,18 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
 
   @override
   Widget build(BuildContext context) {
-    final textDirection = Directionality.of(context);
-    return SizedBox(
+    return Container(
+      margin: EdgeInsets.only(bottom: widget.bottomSpacing),
       height: widget.height,
       child: LayoutBuilder(
         builder: (context, constraints) {
           final maxWidth = min(
               constraints.maxWidth, widget.maxWidth ?? constraints.maxWidth);
           return Align(
-            alignment: textDirection == TextDirection.ltr
-                ? Alignment.bottomLeft
-                : Alignment.bottomRight,
+            alignment: Alignment.bottomCenter,
             child: Container(
-              color: widget.backgroundColor,
               width: maxWidth,
+              color: widget.backgroundColor,
               child: ClipRect(
                 clipper: NavCustomClipper(
                   deviceHeight: MediaQuery.sizeOf(context).height,
@@ -123,13 +123,8 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
                   alignment: Alignment.bottomCenter,
                   children: <Widget>[
                     Positioned(
-                      bottom: -40 - (75.0 - widget.height),
-                      left: textDirection == TextDirection.rtl
-                          ? null
-                          : _pos * maxWidth,
-                      right: textDirection == TextDirection.rtl
-                          ? _pos * maxWidth
-                          : null,
+                      bottom: -40 - (82.0 - widget.height),
+                      left: _pos * maxWidth,
                       width: maxWidth / _length,
                       child: Center(
                         child: Transform.translate(
@@ -154,16 +149,16 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
                       bottom: 0 - (75.0 - widget.height),
                       child: CustomPaint(
                         painter: NavCustomPainter(
-                            _pos, _length, widget.color, textDirection),
+                            _pos, _length, widget.color, TextDirection.ltr),
                         child: Container(
-                          height: 75.0,
+                          height: 70.0,
                         ),
                       ),
                     ),
                     Positioned(
                       left: 0,
                       right: 0,
-                      bottom: 0 - (75.0 - widget.height),
+                      bottom: 0 - (80.0 - widget.height),
                       child: SizedBox(
                           height: 100.0,
                           child: Row(
